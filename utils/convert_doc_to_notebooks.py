@@ -363,6 +363,14 @@ def rm_first_line(text):
     return '\n'.join(text.split('\n')[1:])
 
 
+# For the first cell of the notebook
+INSTALL_CODE = """# Transformers installation
+! pip install transformers
+# To install from source instead of the last release, comment the command above and uncomment the following one.
+# ! pip install git+https://github.com/huggingface/transformers.git
+"""
+
+
 def convert_rst_file_to_notebook(
     rst_file,
     notebook_fname,
@@ -397,7 +405,7 @@ def convert_rst_file_to_notebook(
     lines = content.split("\n")
     lines = process_titles(lines)
     blocks = split_blocks(lines)
-    cells = []
+    cells = [code_cell(INSTALL_CODE)]
     for block,block_type in blocks:
         if block_type == 'title' or block_type == 'prose':
             block = convert_table(convert_rst_formatting(convert_rst_links(block)))
