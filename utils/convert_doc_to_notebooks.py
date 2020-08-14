@@ -6,13 +6,14 @@ import shutil
 # Paths are set to work by invoking this scrip from the notebooks repo, presuming the transformers repo is in the
 # same parent folder as the notebooks repo.
 PATH_TO_DOCS = '../transformers/docs/source'
-PATH_TO_DEST = 'docs'
+PATH_TO_DEST = 'transformers_doc'
 DOC_BASE_URL = "https://huggingface.co/transformers/"
 
 # These are the doc files converted, add any new tutorial to this list if you want it handled by the conversion
 # script.
 TUTORIAL_FILES = [
     "benchmarks.rst",
+    "custom_datasets.rst",
     "multilingual.rst",
     "perplexity.rst",
     "preprocessing.rst",
