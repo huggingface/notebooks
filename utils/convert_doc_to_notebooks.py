@@ -58,6 +58,10 @@ def split_blocks(lines):
             blocks.append(('\n'.join(current_block), block_type))
         return blocks, []
 
+    # Ignore everything before the main title (copyright header)
+    while _re_title.search(lines[i]) is None:
+        i += 1
+
     while i < len(lines):
         line = lines[i]
         if _re_title.search(line) is not None:
