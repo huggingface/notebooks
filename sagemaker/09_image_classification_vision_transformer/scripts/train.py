@@ -14,6 +14,8 @@ if __name__ == "__main__":
     # hyperparameters sent by the client are passed as command-line arguments to the script.
     parser.add_argument("--model_name", type=str)
     parser.add_argument("--output_dir", type=str,default="/opt/ml/model")
+    parser.add_argument("--extra_model_name", type=str,default="sagemaker")
+    parser.add_argument("--use_auth_token", type=str, default="")
 
     parser.add_argument("--num_train_epochs", type=int, default=3)
     parser.add_argument("--per_device_train_batch_size", type=int, default=32)
@@ -96,4 +98,19 @@ if __name__ == "__main__":
 
     # Saves the model to s3
     trainer.save_model(args.model_dir)
-
+    if args.use_auth_token != "":
+        kwargs = {
+            "finetuned_from": args.model_id,
+            "tags": "image-classification",
+            "dataset": args.dataset,
+        }
+        repo_name = (
+            f"{args.model_name_or_path}-{args.task}"
+            if args.extra_model_name == ""
+            else f"{args.model_name_or_path}-{args.task}-{args.extra_model_name}"
+        )
+        trainer.push_to_hub(
+            repo_name=repo_name,
+            use_auth_token=args.use_auth_token,
+            **kwargs,
+        )
