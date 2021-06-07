@@ -21,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument("--per_device_train_batch_size", type=int, default=32)
     parser.add_argument("--per_device_eval_batch_size", type=int, default=64)
     parser.add_argument("--warmup_steps", type=int, default=500)
-    parser.add_argument("--weigh_decay", type=float, default=0.01)
+    parser.add_argument("--weight_decay", type=float, default=0.01)
     parser.add_argument("--learning_rate", type=str, default=2e-5)
 
     parser.add_argument("--training_dir", type=str, default=os.environ["SM_CHANNEL_TRAIN"])
