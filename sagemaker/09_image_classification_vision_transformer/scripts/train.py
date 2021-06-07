@@ -92,7 +92,7 @@ if __name__ == "__main__":
     eval_result = trainer.evaluate(eval_dataset=test_dataset)
 
     # writes eval result to file which can be accessed later in s3 ouput
-    with open(os.path.join(args.output_data_dir, "eval_results.txt"), "w") as writer:
+    with open(os.path.join(args.output_dir, "eval_results.txt"), "w") as writer:
         print(f"***** Eval results *****")
         for key, value in sorted(eval_result.items()):
             writer.write(f"{key} = {value}\n")
