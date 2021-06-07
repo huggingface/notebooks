@@ -41,6 +41,7 @@ if __name__ == "__main__":
     # load datasets
     train_dataset = load_from_disk(args.training_dir)
     test_dataset = load_from_disk(args.test_dir)
+    num_classes = train_dataset.features["label"].num_classes
 
     logger.info(f" loaded train_dataset length is: {len(train_dataset)}")
     logger.info(f" loaded test_dataset length is: {len(test_dataset)}")
@@ -56,7 +57,7 @@ if __name__ == "__main__":
         return metric.compute(predictions=predictions, references=labels)
 
     # download model from model hub
-    model = ViTForImageClassification.from_pretrained(args.model_name)
+    model = ViTForImageClassification.from_pretrained(args.model_name,num_labels=num_classes)
 
     # define training args
     training_args = TrainingArguments(
