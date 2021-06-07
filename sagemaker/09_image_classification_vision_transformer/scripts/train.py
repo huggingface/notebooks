@@ -108,7 +108,7 @@ if __name__ == "__main__":
             "dataset": args.dataset,
         }
         repo_name = (
-            f"{args.model_name}-{args.task}"
+            f"{args.model_name.split('/')[1]}-{args.task}"
             if args.extra_model_name == ""
             else f"{args.model_name}-{args.task}-{args.extra_model_name}"
         )
