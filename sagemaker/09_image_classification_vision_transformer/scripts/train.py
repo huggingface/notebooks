@@ -103,7 +103,7 @@ if __name__ == "__main__":
     trainer.save_model(args.output_dir)
     if args.use_auth_token != "":
         kwargs = {
-            "finetuned_from": args.model_name,
+            "finetuned_from": args.model_name.split("/")[1],
             "tags": "image-classification",
             "dataset": args.dataset,
         }
