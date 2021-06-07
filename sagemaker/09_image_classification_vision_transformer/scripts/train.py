@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--num_train_epochs", type=int, default=3)
     parser.add_argument("--per_device_train_batch_size", type=int, default=32)
-    parser.add_argument("--per_device_train_batch_size", type=int, default=64)
+    parser.add_argument("--per_device_eval_batch_size", type=int, default=64)
     parser.add_argument("--warmup_steps", type=int, default=500)
     parser.add_argument("--weigh_decay", type=float, default=0.01)
     parser.add_argument("--learning_rate", type=str, default=2e-5)
