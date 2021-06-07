@@ -15,6 +15,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_name", type=str)
     parser.add_argument("--output_dir", type=str,default="/opt/ml/model")
     parser.add_argument("--extra_model_name", type=str,default="sagemaker")
+    parser.add_argument("--dataset", type=str,default="cifar10")
     parser.add_argument("--use_auth_token", type=str, default="")
 
     parser.add_argument("--num_train_epochs", type=int, default=3)
