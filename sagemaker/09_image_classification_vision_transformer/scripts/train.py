@@ -98,17 +98,17 @@ if __name__ == "__main__":
             writer.write(f"{key} = {value}\n")
 
     # Saves the model to s3
-    trainer.save_model(args.model_dir)
+    trainer.save_model(args.output_dir)
     if args.use_auth_token != "":
         kwargs = {
-            "finetuned_from": args.model_id,
+            "finetuned_from": args.model_name,
             "tags": "image-classification",
             "dataset": args.dataset,
         }
         repo_name = (
-            f"{args.model_name_or_path}-{args.task}"
+            f"{args.model_name}-{args.task}"
             if args.extra_model_name == ""
-            else f"{args.model_name_or_path}-{args.task}-{args.extra_model_name}"
+            else f"{args.model_name}-{args.task}-{args.extra_model_name}"
         )
         trainer.push_to_hub(
             repo_name=repo_name,
