@@ -110,12 +110,9 @@ if __name__ == "__main__":
         repo_name = (
             f"{args.model_name.split('/')[1]}-{args.task}"
             if args.extra_model_name == ""
-            else f"{args.model_name}-{args.task}-{args.extra_model_name}"
+            else f"{args.model_name.split('/')[1]}-{args.task}-{args.extra_model_name}"
         )
-        logger.info("repo_name")
-        logger.info(repo_name)
-        logger.info("**kwargs")
-        logger.info(kwargs)
+ 
         trainer.push_to_hub(
             repo_name=repo_name,
             use_auth_token=args.use_auth_token,
