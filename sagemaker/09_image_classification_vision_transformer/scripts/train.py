@@ -1,4 +1,4 @@
-from transformers import ViTForImageClassification, Trainer, TrainingArguments,default_data_collator
+from transformers import ViTForImageClassification, Trainer, TrainingArguments,default_data_collator,ViTFeatureExtractor
 from datasets import load_from_disk,load_metric
 import random
 import logging
@@ -62,6 +62,7 @@ if __name__ == "__main__":
     test_dataset = load_from_disk(args.test_dir)
     num_classes = train_dataset.features["label"].num_classes
 
+
     logger.info(f" loaded train_dataset length is: {len(train_dataset)}")
     logger.info(f" loaded test_dataset length is: {len(test_dataset)}")
 
@@ -77,7 +78,15 @@ if __name__ == "__main__":
 
     # download model from model hub
     model = ViTForImageClassification.from_pretrained(args.model_name,num_labels=num_classes)
-
+    feature_extractor = ViTFeatureExtractor.from_pretrained(args.model_name)
+    
+    # change labels
+    id2label =  {key:train_dataset.features["label"].names[index] for index,key in enumerate(model.config.id2label.keys())}
+    label2id =  {train_dataset.features["label"].names[index]:value for index,value in enumerate(model.config.label2id.values())}
+    model.config.id2label = id2label
+    model.config.label2id = label2id
+    
+    
     # define training args
     training_args = TrainingArguments(
         output_dir=args.output_dir,
@@ -118,6 +127,7 @@ if __name__ == "__main__":
 
     # Saves the model to s3
     trainer.save_model(args.output_dir)
+    feature_extractor.save_pretrained(args.output_dir)
     if args.use_auth_token != "":
         kwargs = {
             "finetuned_from": args.model_name.split("/")[1],
