@@ -8,8 +8,20 @@ import os
 import numpy as np
 import subprocess
 
-subprocess.run(['git config --global user.email "huggingface@sagemaker.com"'])
-subprocess.run(['git config --global user.name "HuggingFace"'])
+subprocess.run([
+        "git",
+        "config",
+        "--global",
+        "user.email",
+        "sagemaker@huggingface.co",
+    ], check=True)
+subprocess.run([
+        "git",
+        "config",
+        "--global",
+        "user.name",
+        "sagemaker",
+    ], check=True)
 
 
 if __name__ == "__main__":
