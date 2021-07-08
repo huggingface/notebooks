@@ -58,6 +58,7 @@ if __name__ == "__main__":
 
     # download model from model hub
     model = AutoModelForSequenceClassification.from_pretrained(args.model_name)
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name)
 
     # define training args
     training_args = TrainingArguments(
@@ -78,6 +79,7 @@ if __name__ == "__main__":
         compute_metrics=compute_metrics,
         train_dataset=train_dataset,
         eval_dataset=test_dataset,
+        tokenizer=tokenizer,
     )
 
     # train model
