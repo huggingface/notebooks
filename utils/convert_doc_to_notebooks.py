@@ -370,7 +370,7 @@ def rm_first_line(text):
 
 # For the first cell of the notebook
 INSTALL_CODE = """# Transformers installation
-! pip install transformers
+! pip install transformers datasets
 # To install from source instead of the last release, comment the command above and uncomment the following one.
 # ! pip install git+https://github.com/huggingface/transformers.git
 """
