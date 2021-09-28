@@ -43,7 +43,9 @@ if __name__ == "__main__":
 
     # Load dataset
     train_dataset, test_dataset = load_dataset("imdb", split=["train", "test"])
-
+    train_dataset = train_dataset.shuffle()
+    test_dataset = test_dataset.shuffle()
+    
     # Preprocess train dataset
     train_dataset = train_dataset.map(
         lambda e: tokenizer(e["text"], truncation=True, padding="max_length"), batched=True
