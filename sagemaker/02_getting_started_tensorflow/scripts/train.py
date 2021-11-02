@@ -92,12 +92,12 @@ if __name__ == "__main__":
     model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
     # Training
+    logger.info("*** Train ***")
     train_results = model.fit(
         tf_train_dataset,
         epochs=args.epochs,
         validation_data=tf_validation_dataset,
     )
-    logger.info("*** Train ***")
 
     output_eval_file = os.path.join(args.output_data_dir, "train_results.txt")
 
