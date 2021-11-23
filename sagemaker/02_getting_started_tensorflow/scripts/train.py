@@ -45,7 +45,6 @@ if __name__ == "__main__":
     def preprocess_function(examples):
         return tokenizer(examples["text"], truncation=True)
 
-    encoded_dataset = dataset.rename_column("label", "labels")
     encoded_dataset = dataset.map(preprocess_function, batched=True)
 
     # define tokenizer_columns
@@ -54,18 +53,20 @@ if __name__ == "__main__":
 
     # convert to TF datasets
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer, return_tensors="tf")
+    encoded_dataset["train"] = encoded_dataset["train"].rename_column("label", "labels")
     tf_train_dataset = encoded_dataset["train"].to_tf_dataset(
         columns=tokenizer_columns,
         label_cols=["labels"],
         shuffle=True,
-        batch_size=args.train_batch_size,
+        batch_size=8,
         collate_fn=data_collator,
     )
+    encoded_dataset["test"] = encoded_dataset["test"].rename_column("label", "labels")
     tf_validation_dataset = encoded_dataset["test"].to_tf_dataset(
         columns=tokenizer_columns,
         label_cols=["labels"],
         shuffle=False,
-        batch_size=args.eval_batch_size,
+        batch_size=8,
         collate_fn=data_collator,
     )
 
