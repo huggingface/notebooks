@@ -5,7 +5,7 @@ import sys
 
 import tensorflow as tf
 from datasets import load_dataset
-from transformers import AutoTokenizer, TFAutoModelForSequenceClassification, create_optimizer
+from transformers import AutoTokenizer, TFAutoModelForSequenceClassification, DataCollatorWithPadding, create_optimizer
 
 
 if __name__ == "__main__":
@@ -46,25 +46,27 @@ if __name__ == "__main__":
         return tokenizer(examples["text"], truncation=True)
 
     encoded_dataset = dataset.map(preprocess_function, batched=True)
+    encoded_dataset = dataset.rename_column("label", "labels")
 
     # define tokenizer_columns
     # tokenizer_columns is the list of keys from the dataset that get passed to the TensorFlow model
     tokenizer_columns = ["attention_mask", "input_ids"]
 
     # convert to TF datasets
+    data_collator = DataCollatorWithPadding(tokenizer=tokenizer, return_tensors="tf")
     tf_train_dataset = encoded_dataset["train"].to_tf_dataset(
         columns=tokenizer_columns,
-        label_cols=["label"],
+        label_cols=["labels"],
         shuffle=True,
         batch_size=args.train_batch_size,
-        collate_fn=tokenizer.pad,
+        collate_fn=data_collator,
     )
     tf_validation_dataset = encoded_dataset["test"].to_tf_dataset(
         columns=tokenizer_columns,
-        label_cols=["label"],
+        label_cols=["labels"],
         shuffle=False,
         batch_size=args.eval_batch_size,
-        collate_fn=tokenizer.pad,
+        collate_fn=data_collator,
     )
 
     # Prepare model labels - useful in inference API
