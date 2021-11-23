@@ -45,8 +45,8 @@ if __name__ == "__main__":
     def preprocess_function(examples):
         return tokenizer(examples["text"], truncation=True)
 
-    encoded_dataset = dataset.map(preprocess_function, batched=True)
     encoded_dataset = dataset.rename_column("label", "labels")
+    encoded_dataset = dataset.map(preprocess_function, batched=True)
 
     # define tokenizer_columns
     # tokenizer_columns is the list of keys from the dataset that get passed to the TensorFlow model
