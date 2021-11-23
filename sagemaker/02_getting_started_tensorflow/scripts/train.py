@@ -52,7 +52,7 @@ if __name__ == "__main__":
     tokenizer_columns = ["attention_mask", "input_ids"]
 
     # convert to TF datasets
-    tf_train_dataset = encoded_dataset["train"].to_tf_dataset(
+    tf_train_dataset = encoded_dataset["text"].to_tf_dataset(
         columns=tokenizer_columns,
         label_cols=["label"],
         shuffle=True,
