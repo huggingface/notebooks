@@ -70,7 +70,7 @@ if __name__ == "__main__":
     )
 
     # Prepare model labels - useful in inference API
-    labels = dataset["train"].features["labels"].names
+    labels = encoded_dataset["train"].features["labels"].names
     num_labels = len(labels)
     label2id, id2label = dict(), dict()
     for i, label in enumerate(labels):
