@@ -5,7 +5,7 @@ import sys
 
 import tensorflow as tf
 from datasets import load_dataset
-from transformers import AutoTokenizer, TFAutoModelForSequenceClassification, create_optimizer
+from transformers import AutoTokenizer, TFAutoModelForSequenceClassification, DataCollatorWithPadding, create_optimizer
 
 
 if __name__ == "__main__":
@@ -52,23 +52,26 @@ if __name__ == "__main__":
     tokenizer_columns = ["attention_mask", "input_ids"]
 
     # convert to TF datasets
+    data_collator = DataCollatorWithPadding(tokenizer=tokenizer, return_tensors="tf")
+    encoded_dataset["train"] = encoded_dataset["train"].rename_column("label", "labels")
     tf_train_dataset = encoded_dataset["train"].to_tf_dataset(
         columns=tokenizer_columns,
-        label_cols=["label"],
+        label_cols=["labels"],
         shuffle=True,
-        batch_size=args.train_batch_size,
-        collate_fn=tokenizer.pad,
+        batch_size=8,
+        collate_fn=data_collator,
     )
+    encoded_dataset["test"] = encoded_dataset["test"].rename_column("label", "labels")
     tf_validation_dataset = encoded_dataset["test"].to_tf_dataset(
         columns=tokenizer_columns,
-        label_cols=["label"],
+        label_cols=["labels"],
         shuffle=False,
-        batch_size=args.eval_batch_size,
-        collate_fn=tokenizer.pad,
+        batch_size=8,
+        collate_fn=data_collator,
     )
 
     # Prepare model labels - useful in inference API
-    labels = dataset["train"].features["labels"].names
+    labels = encoded_dataset["train"].features["labels"].names
     num_labels = len(labels)
     label2id, id2label = dict(), dict()
     for i, label in enumerate(labels):
