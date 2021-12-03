@@ -32,16 +32,8 @@ if __name__ == "__main__":
 
     args, _ = parser.parse_known_args()
 
-    # make sure we have required parameters to push
-    if args.push_to_hub:
-        if args.hub_strategy is None:
-            raise ValueError("--hub_strategy is required when pushing to Hub")
-        if args.hub_token is None:
-            raise ValueError("--hub_token is required when pushing to Hub")
-
-    # sets hub id if not provided
-    if args.hub_model_id is None:
-        args.hub_model_id = args.model_id.replace("/", "--")
+    # is needed for Amazon SageMaker Training Compiler
+    os.environ["GPU_NUM_DEVICES"] = args.n_gpus
 
     # Set up logging
     logger = logging.getLogger(__name__)
@@ -97,6 +89,7 @@ if __name__ == "__main__":
         learning_rate=float(args.learning_rate),
         load_best_model_at_end=True,
         metric_for_best_model="accuracy",
+        disable_tqdm=True,
     )
 
     # create Trainer instance
