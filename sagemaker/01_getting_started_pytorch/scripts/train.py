@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("--eval_batch_size", type=int, default=64)
     parser.add_argument("--warmup_steps", type=int, default=500)
     parser.add_argument("--model_name", type=str)
+    parser.add_argument("--output_dir", type=str)
     parser.add_argument("--learning_rate", type=str, default=5e-5)
 
     # Data, model, and output directories
@@ -59,7 +60,7 @@ if __name__ == "__main__":
 
     # define training args
     training_args = TrainingArguments(
-        output_dir=args.model_dir,
+        output_dir=args.output_dir,
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.train_batch_size,
         per_device_eval_batch_size=args.eval_batch_size,
