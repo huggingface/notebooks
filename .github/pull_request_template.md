@@ -30,10 +30,11 @@ Feel free to tag members/contributors who may be interested in your PR.
 `examples`:
 
 - PyTorch NLP & Accelerate: @sgugger
+- TensorFlow: @Rocketknight1 and @gante
 - Computer vision: @NielsRogge
 - Speech: @anton-l and @patrickvonplaten
-- TensorFlow: @Rocketknight1 and @gante
 - ONNX: @lewtun
+- Optimum: @echarlaix 
 - Tokenizers: @n1t0, @Narsil
 - Benchmarks: @patrickvonplaten
 
