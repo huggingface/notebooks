@@ -30,7 +30,6 @@ Feel free to tag members/contributors who may be interested in your PR.
 
 `sagemaker`: @philschmid
 
-`transformers_doc:` @sgugger
 
 
  -->
