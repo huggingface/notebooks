@@ -21,14 +21,18 @@ Feel free to tag members/contributors who may be interested in your PR.
  Please tag fewer than 2 people.
 
 
-`examples`: @sgugger
+`examples`:
 
-`huggingface_hub`: @muellerzr
+- PyTorch & Accelerate: @sgugger
+- TensorFlow: @Rocketknight1 and @gante
+- ONNX: @lewtun
+- Tokenizers: @n1t0, @Narsil
+- Benchmarks: @patrickvonplaten
+
+`huggingface_hub`: @muellerzr and @LysandreJik 
 
 `longform_qa`: @yjernite
 
 `sagemaker`: @philschmid
-
-
 
  -->
