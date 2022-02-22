@@ -4,6 +4,12 @@
 Thank you for submitting a PR to improve our notebooks!
 
 Someone will review your PR shortly (see the section "Who can review?" below to tag some potential reviewers). They may suggest changes to make the code even better. If no one reviewed your PR after a week has passed, don't hesitate to post a new comment @-mentioning the same persons---sometimes notifications get lost.
+
+Note: the notebooks in the `course` and `transformers_doc` directories are auto-generated, so are best fixed at their source. Instead, follows the instructions below for these notebooks:
+
+- `course`: Create a post on our forums and tag @lewtun (https://discuss.huggingface.co/c/course/20)
+- `transformers_doc`: Open a PR directly on the `transformers` repo (https://github.com/huggingface/transformers)
+
 -->
 
 <!-- Remove if not applicable -->
@@ -23,7 +29,9 @@ Feel free to tag members/contributors who may be interested in your PR.
 
 `examples`:
 
-- PyTorch & Accelerate: @sgugger
+- PyTorch NLP & Accelerate: @sgugger
+- Computer vision: @NielsRogge
+- Speech: @anton-l and @patrickvonplaten
 - TensorFlow: @Rocketknight1 and @gante
 - ONNX: @lewtun
 - Tokenizers: @n1t0, @Narsil
