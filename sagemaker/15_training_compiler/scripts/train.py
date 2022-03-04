@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     # Data, model, and output directories
     parser.add_argument("--output_data_dir", type=str, default=os.environ["SM_OUTPUT_DATA_DIR"])
-    parser.add_argument("--output_dir", type=str, default=os.environ["SM_MODEL_DIR"])
+    parser.add_argument("--output_dir", type=str, default="/opt/ml/checkpoints")
     parser.add_argument("--n_gpus", type=str, default=os.environ["SM_NUM_GPUS"])
     parser.add_argument("--training_dir", type=str, default=os.environ["SM_CHANNEL_TRAIN"])
     parser.add_argument("--test_dir", type=str, default=os.environ["SM_CHANNEL_TEST"])
