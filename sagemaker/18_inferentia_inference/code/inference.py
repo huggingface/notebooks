@@ -14,7 +14,7 @@ def model_fn(model_dir):
     # load tokenizer and neuron model from model_dir
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
     model = torch.jit.load(os.path.join(model_dir, AWS_NEURON_TRACED_WEIGHTS_NAME))
-    model_config = AutoConfig.from_pretrained(model_dir).id2label
+    model_config = AutoConfig.from_pretrained(model_dir)
 
     return model, tokenizer, model_config
 
