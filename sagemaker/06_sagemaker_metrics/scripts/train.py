@@ -7,7 +7,7 @@ import sys
 from datasets import load_from_disk
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import torch
-from transformers import AutoModelForSequenceClassification, Trainer, TrainingArguments
+from transformers import AutoModelForSequenceClassification, Trainer, TrainingArguments, AutoTokenizer
 
 
 if __name__ == "__main__":
