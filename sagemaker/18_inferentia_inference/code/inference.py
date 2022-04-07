@@ -4,7 +4,7 @@ import torch
 import torch.neuron
 
 # To use one neuron core per worker
-os.environ["NEURONCORE_GROUP_SIZES"] = "1"
+os.environ["NEURON_RT_NUM_CORES"] = "1"
 
 # saved weights name
 AWS_NEURON_TRACED_WEIGHTS_NAME = "neuron_model.pt"
