@@ -7,3 +7,5 @@ the `docs/source/` folder.
 
 If there is something that seems weirdly converted from the original doc file, open an issue in this repo and we will
 try to fix the conversion script.
+
+**Note:** If you are looking for a particular notebook and can't find it, it may have moved inside the `en` subfolder.
