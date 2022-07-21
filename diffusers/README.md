@@ -1,4 +1,4 @@
-# notebooks-diffusers
+# Diffusers Notebooks
 Notebooks for the HuggingFace Diffusers library
 
 <p align="center">
@@ -7,7 +7,9 @@ Notebooks for the HuggingFace Diffusers library
     <br>
 <p>
 
-## Contents
+## 📓 Examples
 
-* Example training the [DDPM model](https://arxiv.org/abs/2006.11239) on a dataset of butterfly images.
-* Example using the [diffuser model](https://arxiv.org/abs/2205.09991) for planning in reinforcement learning
+| Notebook                                                                                                             | Colab                                                                                                                                                                                   | Description                                                                                                            |
+|----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| [Getting started with Diffusers](https://github.com/huggingface/notebooks/blob/main/diffusers/diffusers_intro.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/huggingface/notebooks/blob/main/diffusers/diffusers_intro.ipynb)  | First look at the library with a detailed model inference example.                                                     |
+| [Training a DDPM model](https://github.com/huggingface/notebooks/blob/main/diffusers/training_example.ipynb)         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/huggingface/notebooks/blob/main/diffusers/training_example.ipynb) | An example of training a [DDPM model](https://arxiv.org/abs/2006.11239) from scratch on a dataset of butterfly images. |
