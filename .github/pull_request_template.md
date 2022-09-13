@@ -7,7 +7,7 @@ Someone will review your PR shortly (see the section "Who can review?" below to 
 
 Note: the notebooks in the `course` and `transformers_doc` directories are auto-generated, so are best fixed at their source. Instead, follow the instructions below for these notebooks:
 
-- `course`: Create a post on our forums and tag @lewtun (https://discuss.huggingface.co/c/course/20)
+- `course`: Open a PR directly on the `course` repo (https://github.com/huggingface/course)
 - `transformers_doc`: Open a PR directly on the `transformers` repo (https://github.com/huggingface/transformers)
 
 -->
