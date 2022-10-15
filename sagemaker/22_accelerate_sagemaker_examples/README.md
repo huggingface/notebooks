@@ -30,14 +30,14 @@ train	s3://sagemaker-sample/samples/datasets/imdb/train
 test	s3://sagemaker-sample/samples/datasets/imdb/test
 ```
 
-6. Support for SageMaker metrics logging via TSV file, e.g., below are the contents of the sagemaker_metrics_definition.tsv whose location is given as part of accelerate config setup.
+5. Support for SageMaker metrics logging via TSV file, e.g., below are the contents of the sagemaker_metrics_definition.tsv whose location is given as part of accelerate config setup.
 ```tsv
 metric_name	metric_regex
 accuracy	'accuracy': ([0-9.]+)
 f1	'f1': ([0-9.]+)
 ```
 
-7. Example of accelerate config with above features setup [XXXXX values are AWS account specific]:
+6. Example of accelerate config with above features setup [XXXXX values are AWS account specific]:
 ```yaml
 base_job_name: accelerate-sagemaker-1
 compute_environment: AMAZON_SAGEMAKER
@@ -56,9 +56,9 @@ sagemaker_metrics_file: sagemaker_metrics_definition.tsv
 transformers_version: 4.17.0
 use_cpu: false
 ```
-8. Put `requirements.txt` with all the needed libraries for running the training script.
+7. Put `requirements.txt` with all the needed libraries for running the training script.
 
-9. Running `text-classification` example using s3 datasets (from the root directory):
+8. Running `text-classification` example using s3 datasets (from the root directory):
 ```bash
 cd src/text-classification
 bash launch.sh
@@ -90,7 +90,7 @@ Output logs:
 ```
 
 
-10. Running `seq2seq` example:
+9. Running `seq2seq` example:
 ```bash
 cd src/seq2seq
 bash launch.sh
