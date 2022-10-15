@@ -1,0 +1,3 @@
+channel_name	data_location
+train	s3://sagemaker-sample/datasets/mrpc/train
+validation	s3://sagemaker-sample/datasets/mrpc/validation
