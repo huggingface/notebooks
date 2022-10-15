@@ -1,7 +1,7 @@
 # accelerate-aws-sagemaker
 Examples showcasing AWS SageMaker integration of 🤗 Accelerate. Just give the `accelerate config` and do `accelerate launch` 🚀. As simple as that!
 
-1. Set up the accelerate config by running `accelerate config --config_file accelerate_config.yaml` and answer the SageMaker questions and set it up.
+1. Set up the accelerate config by running `accelerate config --config_file accelerate_config.yaml` and answer the SageMaker questions.
 
 2. Below is a sample config which is using aws `profile` to launch training job using 🤗 SageMaker estimator. It also has the `iam_role_name` which has the needed SageMaker permissions specified. In this config it is replaced `xxxxx` as user needs to specify it based on their corresponding AWS setup.
 
