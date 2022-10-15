@@ -1,5 +1,5 @@
 # accelerate-aws-sagemaker
-Examples showcasing AWS SageMaker integration of 🤗 Accelerate. Just give the `accelerate config` and do `accelerate launch` 🚀. As simple as that!
+Examples showcasing AWS SageMaker integration of 🤗 Accelerate. Just give the `accelerate config` and do `accelerate launch` 🚀. It's as simple as that!
 
 1. Set up the accelerate config by running `accelerate config --config_file accelerate_config.yaml` and answer the SageMaker questions.
 
