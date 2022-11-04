@@ -77,7 +77,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--with_prior_preservation",
         default=False,
-        action="store_true",
+        type=bool,
         help="Flag to add prior preservation loss.",
     )
     parser.add_argument("--prior_loss_weight", type=float, default=1.0, help="The weight of prior preservation loss.")
@@ -106,10 +106,8 @@ def parse_args(input_args=None):
             " resolution"
         ),
     )
-    parser.add_argument(
-        "--center_crop", action="store_true", help="Whether to center crop images before resizing to resolution"
-    )
-    parser.add_argument("--train_text_encoder", action="store_true", help="Whether to train the text encoder")
+    parser.add_argument("--center_crop", type=bool, help="Whether to center crop images before resizing to resolution")
+    parser.add_argument("--train_text_encoder", type=bool, help="Whether to train the text encoder")
     parser.add_argument(
         "--train_batch_size", type=int, default=4, help="Batch size (per device) for the training dataloader."
     )
@@ -131,7 +129,7 @@ def parse_args(input_args=None):
     )
     parser.add_argument(
         "--gradient_checkpointing",
-        action="store_true",
+        type=bool,
         help="Whether or not to use gradient checkpointing to save memory at the expense of slower backward pass.",
     )
     parser.add_argument(
@@ -142,7 +140,7 @@ def parse_args(input_args=None):
     )
     parser.add_argument(
         "--scale_lr",
-        action="store_true",
+        type=bool,
         default=False,
         help="Scale the learning rate by the number of GPUs, gradient accumulation steps, and batch size.",
     )
@@ -158,15 +156,13 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--lr_warmup_steps", type=int, default=500, help="Number of steps for the warmup in the lr scheduler."
     )
-    parser.add_argument(
-        "--use_8bit_adam", action="store_true", help="Whether or not to use 8-bit Adam from bitsandbytes."
-    )
+    parser.add_argument("--use_8bit_adam", type=bool, help="Whether or not to use 8-bit Adam from bitsandbytes.")
     parser.add_argument("--adam_beta1", type=float, default=0.9, help="The beta1 parameter for the Adam optimizer.")
     parser.add_argument("--adam_beta2", type=float, default=0.999, help="The beta2 parameter for the Adam optimizer.")
     parser.add_argument("--adam_weight_decay", type=float, default=1e-2, help="Weight decay to use.")
     parser.add_argument("--adam_epsilon", type=float, default=1e-08, help="Epsilon value for the Adam optimizer")
     parser.add_argument("--max_grad_norm", default=1.0, type=float, help="Max gradient norm.")
-    parser.add_argument("--push_to_hub", action="store_true", help="Whether or not to push the model to the Hub.")
+    parser.add_argument("--push_to_hub", type=bool, help="Whether or not to push the model to the Hub.")
     parser.add_argument("--hub_token", type=str, default=None, help="The token to use to push to the Model Hub.")
     parser.add_argument(
         "--hub_model_id",
