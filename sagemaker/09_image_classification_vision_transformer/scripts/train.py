@@ -1,4 +1,4 @@
-from transformers import ViTForImageClassification, Trainer, TrainingArguments,default_data_collator,ViTFeatureExtractor
+from transformers import ViTForImageClassification, Trainer, TrainingArguments,default_data_collator,ViTImageProcessor
 from datasets import load_from_disk,load_metric
 import random
 import logging
