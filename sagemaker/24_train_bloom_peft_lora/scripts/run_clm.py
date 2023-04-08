@@ -9,6 +9,8 @@ from transformers import (
 from datasets import load_from_disk
 import torch
 from transformers import Trainer, TrainingArguments
+from peft import PeftConfig, PeftModel
+import shutil
 
 
 def parse_arge():
@@ -24,12 +26,6 @@ def parse_arge():
     parser.add_argument("--dataset_path", type=str, default="lm_dataset", help="Path to dataset.")
     # add training hyperparameters for epochs, batch size, learning rate, and seed
     parser.add_argument("--epochs", type=int, default=3, help="Number of epochs to train for.")
-    parser.add_argument(
-        "--max_train_samples",
-        type=int,
-        default=None,
-        help="Number of samples to train on.",
-    )
     parser.add_argument(
         "--per_device_train_batch_size",
         type=int,
@@ -103,7 +99,7 @@ def training_function(args):
         learning_rate=args.lr,
         num_train_epochs=args.epochs,
         gradient_checkpointing=args.gradient_checkpointing,
-        gradient_accumulation_steps=1,
+        gradient_accumulation_steps=2,
         # logging strategies
         logging_dir=f"{output_dir}/logs",
         logging_strategy="steps",
@@ -124,12 +120,39 @@ def training_function(args):
     trainer.train()
 
     # merge adapter weights with base model and save
-    merged_model = trainer.model.merge_and_unload()
+    # save int 8 model
+    trainer.model.save_pretrained(output_dir)
+    # clear memory
+    del model 
+    del trainer
+    # load PEFT model in fp16
+    peft_config = PeftConfig.from_pretrained(output_dir)
+    model = AutoModelForCausalLM.from_pretrained(
+        peft_config.base_model_name_or_path,
+        return_dict=True,
+        torch_dtype=torch.float16,
+        low_cpu_mem_usage=True,
+    )
+    model = PeftModel.from_pretrained(model, output_dir)
+    model.eval()
+    # Merge LoRA and base model and save
+    merged_model = model.merge_and_unload()
     merged_model.save_pretrained("/opt/ml/model/")
 
     # save tokenizer for easy inference
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
     tokenizer.save_pretrained("/opt/ml/model/")
+    
+    # copy inference script
+    os.makedirs("/opt/ml/model/code", exist_ok=True)
+    shutil.copyfile(
+        os.path.join(os.path.dirname(__file__), "inference.py"),
+        "/opt/ml/model/code/inference.py",
+    )
+    shutil.copyfile(
+        os.path.join(os.path.dirname(__file__), "requirements.txt"),
+        "/opt/ml/model/code/requirements.txt",
+    )
 
 
 def main():
