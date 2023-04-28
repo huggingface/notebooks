@@ -9,8 +9,6 @@ from transformers import (
 from datasets import load_from_disk
 import torch
 from transformers import Trainer, TrainingArguments
-from peft import PeftConfig, PeftModel
-import shutil
 
 
 def parse_arge():
@@ -34,7 +32,7 @@ def parse_arge():
         help="Batch size to use for training.",
     )
     parser.add_argument("--lr", type=float, default=5e-5, help="Learning rate to use for training.")
-    parser.add_argument("--optimizer", type=str, default="adam_hf", help="Learning rate to use for training.")
+    parser.add_argument("--optimizer", type=str, default="adamw_hf", help="Learning rate to use for training.")
     parser.add_argument("--seed", type=int, default=42, help="Seed to use for training.")
     parser.add_argument(
         "--gradient_checkpointing",
@@ -48,9 +46,9 @@ def parse_arge():
         default=True if torch.cuda.get_device_capability()[0] == 8 else False,
         help="Whether to use bf16.",
     )
-    parser.add_argument("fsdp", type=str , default=None, help="Whether to use fsdp.")
-    parser.add_argument("fsdp_transformer_layer_cls_to_wrap", type=str , default=None, help="Which transformer layer to wrap with fsdp.")
-    
+    # parser.add_argument("fsdp", type=str , default=None, help="Whether to use fsdp.")
+    # parser.add_argument("fsdp_transformer_layer_cls_to_wrap", type=str , default=None, help="Which transformer layer to wrap with fsdp.")
+    parser.add_argument("ds_config", type=str , default=None, help="Path to deepspeed config file.")
     
     args = parser.parse_known_args()
     return args
@@ -106,15 +104,16 @@ def training_function(args):
         learning_rate=args.lr,
         num_train_epochs=args.epochs,
         gradient_checkpointing=args.gradient_checkpointing,
-        gradient_accumulation_steps=1,
+        # gradient_accumulation_steps=1,
         # logging strategies
         logging_dir=f"{output_dir}/logs",
         logging_strategy="steps",
         logging_steps=10,
         save_strategy="no",
-        optim=args.optimizer,
-        fsdp=args.fsdp,
-        fsdp_transformer_layer_cls_to_wrap=args.fsdp_transformer_layer_cls_to_wrap,
+        # optim=args.optimizer,
+        # fsdp=args.fsdp,
+        # fsdp_transformer_layer_cls_to_wrap=args.fsdp_transformer_layer_cls_to_wrap,
+        deepspeed=args.ds_config,
     )
 
     # Create Trainer instance
