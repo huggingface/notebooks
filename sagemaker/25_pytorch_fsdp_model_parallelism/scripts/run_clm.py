@@ -46,9 +46,9 @@ def parse_arge():
         default=True if torch.cuda.get_device_capability()[0] == 8 else False,
         help="Whether to use bf16.",
     )
-    # parser.add_argument("fsdp", type=str , default=None, help="Whether to use fsdp.")
-    # parser.add_argument("fsdp_transformer_layer_cls_to_wrap", type=str , default=None, help="Which transformer layer to wrap with fsdp.")
-    parser.add_argument("ds_config", type=str , default=None, help="Path to deepspeed config file.")
+    parser.add_argument("fsdp", type=str , default=None, help="Whether to use fsdp.")
+    parser.add_argument("fsdp_transformer_layer_cls_to_wrap", type=str , default=None, help="Which transformer layer to wrap with fsdp.")
+    # parser.add_argument("deepspeed", type=str , default=None, help="Path to deepspeed config file.")
     
     args = parser.parse_known_args()
     return args
@@ -88,8 +88,6 @@ def training_function(args):
     model = AutoModelForCausalLM.from_pretrained(
         args.model_id,
         use_cache=False if args.gradient_checkpointing else True,  # this is needed for gradient checkpointing
-        device_map="auto",
-        torch_dtype=torch.bfloat16 if args.bf16 else torch.float32,
     )
     # # create peft config
     # model = create_peft_config(model)
@@ -110,10 +108,11 @@ def training_function(args):
         logging_strategy="steps",
         logging_steps=10,
         save_strategy="no",
+        # torch_compile=True,
         # optim=args.optimizer,
-        # fsdp=args.fsdp,
-        # fsdp_transformer_layer_cls_to_wrap=args.fsdp_transformer_layer_cls_to_wrap,
-        deepspeed=args.ds_config,
+        fsdp=args.fsdp,
+        fsdp_transformer_layer_cls_to_wrap=args.fsdp_transformer_layer_cls_to_wrap,
+        # deepspeed=args.deepspeed,
     )
 
     # Create Trainer instance
