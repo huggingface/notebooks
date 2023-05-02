@@ -31,7 +31,7 @@ def parse_arge():
         default=1,
         help="Batch size to use for training.",
     )
-    parser.add_argument("--lr", type=float, default=5e-5, help="Learning rate to use for training.")
+    parser.add_argument("--lr", type=float, default=3e-5, help="Learning rate to use for training.")
     parser.add_argument("--optimizer", type=str, default="adamw_hf", help="Learning rate to use for training.")
     parser.add_argument("--seed", type=int, default=42, help="Seed to use for training.")
     parser.add_argument(
@@ -48,34 +48,9 @@ def parse_arge():
     )
     parser.add_argument("fsdp", type=str , default=None, help="Whether to use fsdp.")
     parser.add_argument("fsdp_transformer_layer_cls_to_wrap", type=str , default=None, help="Which transformer layer to wrap with fsdp.")
-    # parser.add_argument("deepspeed", type=str , default=None, help="Path to deepspeed config file.")
     
     args = parser.parse_known_args()
     return args
-
-
-# def create_peft_config(model):
-#     from peft import (
-#         get_peft_model,
-#         LoraConfig,
-#         TaskType,
-#         prepare_model_for_int8_training,
-#     )
-
-#     peft_config = LoraConfig(
-#         task_type=TaskType.CAUSAL_LM,
-#         inference_mode=False,
-#         r=8,
-#         lora_alpha=32,
-#         lora_dropout=0.05,
-#         target_modules=["query_key_value"],
-#     )
-
-#     # prepare int-8 model for training
-#     model = prepare_model_for_int8_training(model)
-#     model = get_peft_model(model, peft_config)
-#     model.print_trainable_parameters()
-#     return model
 
 
 def training_function(args):
@@ -89,8 +64,6 @@ def training_function(args):
         args.model_id,
         use_cache=False if args.gradient_checkpointing else True,  # this is needed for gradient checkpointing
     )
-    # # create peft config
-    # model = create_peft_config(model)
 
     # Define training args
     output_dir = "/tmp"
@@ -102,17 +75,14 @@ def training_function(args):
         learning_rate=args.lr,
         num_train_epochs=args.epochs,
         gradient_checkpointing=args.gradient_checkpointing,
-        # gradient_accumulation_steps=1,
         # logging strategies
         logging_dir=f"{output_dir}/logs",
         logging_strategy="steps",
         logging_steps=10,
         save_strategy="no",
-        # torch_compile=True,
-        # optim=args.optimizer,
+        optim=args.optimizer,
         fsdp=args.fsdp,
         fsdp_transformer_layer_cls_to_wrap=args.fsdp_transformer_layer_cls_to_wrap,
-        # deepspeed=args.deepspeed,
     )
 
     # Create Trainer instance

@@ -1,4 +1,1 @@
 transformers==4.28.1
-# accelerate==0.18.0
-# torch==2.0.0
-# deepspeed==0.8.3
