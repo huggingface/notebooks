@@ -11,6 +11,22 @@ import torch
 from transformers import Trainer, TrainingArguments
 
 
+def safe_save_model_for_hf_trainer(trainer: Trainer, output_dir: str):
+    """Helper method to save model for HF Trainer."""
+    # see: https://github.com/tatsu-lab/stanford_alpaca/issues/65
+    from torch.distributed.fsdp import (
+        FullyShardedDataParallel as FSDP,
+        FullStateDictConfig,
+        StateDictType,
+    )
+    model = trainer.model  
+    save_policy = FullStateDictConfig(offload_to_cpu=True, rank0_only=True)
+    with FSDP.state_dict_type(model, StateDictType.FULL_STATE_DICT, save_policy):
+        cpu_state_dict = model.state_dict()
+    if trainer.args.should_save:
+        trainer._save(output_dir, state_dict=cpu_state_dict)  # noqa
+
+
 def parse_arge():
     """Parse the arguments."""
     parser = argparse.ArgumentParser()
@@ -98,7 +114,7 @@ def training_function(args):
     
     
     # save model
-    trainer.model.save_pretrained("/opt/ml/model/")
+    safe_save_model_for_hf_trainer(trainer, "/opt/ml/model/")
     # save tokenizer for easy inference
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
     tokenizer.save_pretrained("/opt/ml/model/")
@@ -111,3 +127,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
