@@ -9,9 +9,10 @@ from transformers import (
 from datasets import load_from_disk
 import torch
 from transformers import Trainer, TrainingArguments
+import torch.distributed as dist
 
 
-def safe_save_model_for_hf_trainer(trainer: Trainer, output_dir: str):
+def safe_save_model_for_hf_trainer(trainer: Trainer, tokenizer: AutoTokenizer, output_dir: str):
     """Helper method to save model for HF Trainer."""
     # see: https://github.com/tatsu-lab/stanford_alpaca/issues/65
     from torch.distributed.fsdp import (
@@ -19,12 +20,14 @@ def safe_save_model_for_hf_trainer(trainer: Trainer, output_dir: str):
         FullStateDictConfig,
         StateDictType,
     )
-    model = trainer.model  
+
+    model = trainer.model
     save_policy = FullStateDictConfig(offload_to_cpu=True, rank0_only=True)
     with FSDP.state_dict_type(model, StateDictType.FULL_STATE_DICT, save_policy):
         cpu_state_dict = model.state_dict()
     if trainer.args.should_save:
         trainer._save(output_dir, state_dict=cpu_state_dict)  # noqa
+        tokenizer.save_pretrained(output_dir)
 
 
 def parse_arge():
@@ -62,9 +65,14 @@ def parse_arge():
         default=True if torch.cuda.get_device_capability()[0] == 8 else False,
         help="Whether to use bf16.",
     )
-    parser.add_argument("fsdp", type=str , default=None, help="Whether to use fsdp.")
-    parser.add_argument("fsdp_transformer_layer_cls_to_wrap", type=str , default=None, help="Which transformer layer to wrap with fsdp.")
-    
+    parser.add_argument("--fsdp", type=str, default=None, help="Whether to use fsdp.")
+    parser.add_argument(
+        "--fsdp_transformer_layer_cls_to_wrap",
+        type=str,
+        default=None,
+        help="Which transformer layer to wrap with fsdp.",
+    )
+
     args = parser.parse_known_args()
     return args
 
@@ -74,12 +82,12 @@ def training_function(args):
     set_seed(args.seed)
 
     dataset = load_from_disk(args.dataset_path)
-    
     # load model from the hub
     model = AutoModelForCausalLM.from_pretrained(
         args.model_id,
         use_cache=False if args.gradient_checkpointing else True,  # this is needed for gradient checkpointing
     )
+    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
 
     # Define training args
     output_dir = "/tmp"
@@ -97,6 +105,7 @@ def training_function(args):
         logging_steps=10,
         save_strategy="no",
         optim=args.optimizer,
+        ddp_timeout=7200,
         fsdp=args.fsdp,
         fsdp_transformer_layer_cls_to_wrap=args.fsdp_transformer_layer_cls_to_wrap,
     )
@@ -111,13 +120,12 @@ def training_function(args):
 
     # Start training
     trainer.train()
-    
-    
-    # save model
-    safe_save_model_for_hf_trainer(trainer, "/opt/ml/model/")
-    # save tokenizer for easy inference
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
-    tokenizer.save_pretrained("/opt/ml/model/")
+
+    print("Training done!")
+
+    # save model and tokenizer for easy inference
+    safe_save_model_for_hf_trainer(trainer, tokenizer, "/opt/ml/model/")
+    dist.barrier()
 
 
 def main():
@@ -127,4 +135,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
