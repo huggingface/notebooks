@@ -13,9 +13,6 @@ import logging
 from transformers import TrainingArguments
 from optimum.neuron import TrainiumTrainer as Trainer
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from huggingface_hub import login
-
-login(token="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")
 
 logger = logging.getLogger(__name__)
 
