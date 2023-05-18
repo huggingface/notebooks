@@ -101,7 +101,7 @@ def training_function(args):
         bf16=True,
         tf32=True,
         gradient_checkpointing=args.gradient_checkpointing,
-        logging_steps=20,
+        logging_steps=10,
         save_total_limit=1,
         evaluation_strategy="no",
         save_strategy="epoch",
@@ -119,9 +119,7 @@ def training_function(args):
 
     # save model and processor
     trainer.model.save_pretrained("/opt/ml/model/")
-    # save tokenizer for easy inference
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
-    tokenizer.save_pretrained("/opt/ml/model/")
+    processor.save_pretrained("/opt/ml/model/")
     
     # copy inference script
     os.makedirs("/opt/ml/model/code", exist_ok=True)

@@ -18,7 +18,7 @@ def predict_fn(data, model_and_processor):
     # unpack model and tokenizer
     model, processor = model_and_processor
     
-    image = data.get("image")
+    image = data.get("inputs")
     pixel_values = processor.feature_extractor(image, return_tensors="pt").pixel_values
     task_prompt = "<s>" # start of sequence token for decoder since we are not having a user prompt
     decoder_input_ids = processor.tokenizer(task_prompt, add_special_tokens=False, return_tensors="pt").input_ids
