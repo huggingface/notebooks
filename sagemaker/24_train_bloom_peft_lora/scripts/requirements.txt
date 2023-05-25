@@ -1,4 +1,4 @@
-git+https://github.com/huggingface/peft.git
+git+https://github.com/huggingface/peft.git@v0.2.0
 transformers==4.27.1
 accelerate==0.17.1
 bitsandbytes==0.37.1
