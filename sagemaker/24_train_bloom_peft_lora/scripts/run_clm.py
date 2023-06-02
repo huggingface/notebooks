@@ -123,7 +123,7 @@ def training_function(args):
     # save int 8 model
     trainer.model.save_pretrained(output_dir)
     # clear memory
-    del model 
+    del model
     del trainer
     # load PEFT model in fp16
     peft_config = PeftConfig.from_pretrained(output_dir)
@@ -142,7 +142,7 @@ def training_function(args):
     # save tokenizer for easy inference
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
     tokenizer.save_pretrained("/opt/ml/model/")
-    
+
     # copy inference script
     os.makedirs("/opt/ml/model/code", exist_ok=True)
     shutil.copyfile(
