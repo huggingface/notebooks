@@ -9,7 +9,7 @@ from transformers import (
 from datasets import load_from_disk
 import evaluate
 import numpy as np
-import logging 
+import logging
 from transformers import TrainingArguments
 from optimum.neuron import TrainiumTrainer as Trainer
 from pathlib import Path
@@ -28,9 +28,7 @@ def parse_arge():
     parser.add_argument("--model_id", type=str, default="bert-large-uncased", help="Model id to use for training.")
     parser.add_argument("--training_dir", type=str, default=os.environ["SM_CHANNEL_TRAIN"])
     parser.add_argument("--test_dir", type=str, default=os.environ["SM_CHANNEL_TEST"])
-    parser.add_argument(
-        "--output_dir", type=str, default=None, help="Hugging Face Repository id for uploading models"
-    )
+    parser.add_argument("--output_dir", type=str, default=None, help="Hugging Face Repository id for uploading models")
     parser.add_argument("--model_dir", type=str, default=os.environ["SM_MODEL_DIR"])
     # add training hyperparameters for epochs, batch size, learning rate, and seed
     parser.add_argument("--epochs", type=int, default=3, help="Number of epochs to train for.")
@@ -47,8 +45,10 @@ def parse_arge():
     args = parser.parse_known_args()
     return args
 
+
 # Metric Id
 metric = evaluate.load("f1")
+
 
 # Metric helper method
 def compute_metrics(eval_pred):
@@ -67,9 +67,9 @@ def training_function(args):
 
     logger.info(f"loaded train_dataset length is: {len(train_dataset)}")
     logger.info(f"loaded test_dataset length is: {len(test_dataset)}")
-    
+
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
-    
+
     # Prepare model labels - useful for inference
     labels = train_dataset.features["labels"].names
     num_labels = len(labels)
@@ -119,9 +119,10 @@ def training_function(args):
     # convert model to inferentia2
     with training_args.main_process_first(desc="export model"):
         print("exporting model")
-        # tokenizer      
+        # tokenizer
         neuron_config = DistilBertNeuronConfig(
-        config=trainer.model.config, task="text-classification", batch_size=1, sequence_length=128)
+            config=trainer.model.config, task="text-classification", batch_size=1, sequence_length=128
+        )
         output_path = Path(f"{args.model_dir}/neuron_model.pt")
         # Export to Neuron model
         export(
