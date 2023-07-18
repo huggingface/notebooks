@@ -1,5 +1,5 @@
 transformers==4.30.2
-git+https://github.com/huggingface/peft.git@189a6b8e357ecda05ccde13999e4c35759596a67
+peft==0.4.0
 accelerate==0.20.3
 bitsandbytes==0.39.1
 safetensors==0.3.1
