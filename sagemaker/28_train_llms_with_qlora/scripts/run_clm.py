@@ -148,7 +148,7 @@ def training_function(args):
     if args.merge_weights:
         # merge adapter weights with base model and save
         # save int 4 model
-        trainer.model.save_pretrained(output_dir)
+        trainer.model.save_pretrained(output_dir,safe_serialization=True)
         # clear memory
         del model
         del trainer
@@ -165,9 +165,9 @@ def training_function(args):
         model.eval()
         # Merge LoRA and base model and save
         merged_model = model.merge_and_unload()
-        merged_model.save_pretrained("/opt/ml/model/")
+        merged_model.save_pretrained("/opt/ml/model/",safe_serialization=True)
     else:
-        trainer.model.save_pretrained("/opt/ml/model/")
+        trainer.model.save_pretrained("/opt/ml/model/", safe_serialization=True)
 
     # save tokenizer for easy inference
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
