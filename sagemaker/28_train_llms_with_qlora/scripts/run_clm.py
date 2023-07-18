@@ -160,9 +160,9 @@ def training_function(args):
         offload_folder = "/tmp/offload"
         model = AutoPeftModelForCausalLM.from_pretrained(
             output_dir,
-            device_map="auto",
             torch_dtype=torch.float16,
-            offload_folder=offload_folder, # offload to disk if model is to big)
+            low_cpu_mem_usage=True,
+            trust_remote_code=True,  # ATTENTION: This allows remote code execution
         )  
         # Merge LoRA and base model and save
         merged_model = model.merge_and_unload()
@@ -171,7 +171,7 @@ def training_function(args):
         trainer.model.save_pretrained("/opt/ml/model/", safe_serialization=True)
 
     # save tokenizer for easy inference
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+    tokenizer = AutoTokenizer.from_pretrained(args.model_id, trust_remote_code=True)
     tokenizer.save_pretrained("/opt/ml/model/")
 
 
