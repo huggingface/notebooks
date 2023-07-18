@@ -148,26 +148,27 @@ def training_function(args):
     if args.merge_weights:
         # merge adapter weights with base model and save
         # save int 4 model
-        trainer.model.save_pretrained(output_dir)
+        trainer.model.save_pretrained(output_dir, safe_serialization=False)
         # clear memory
         del model
         del trainer
+        torch.cuda.empty_cache()
+
+        from peft import AutoPeftModelForCausalLM
+
         # load PEFT model in fp16
-        peft_config = PeftConfig.from_pretrained(output_dir)
-        model = AutoModelForCausalLM.from_pretrained(
-            peft_config.base_model_name_or_path,
-            return_dict=True,
+        offload_folder = "/tmp/offload"
+        model = AutoPeftModelForCausalLM.from_pretrained(
+            output_dir,
+            device_map="auto",
             torch_dtype=torch.float16,
-            low_cpu_mem_usage=True,
-            trust_remote_code=True,  # ATTENTION: This allows remote code execution
-        )
-        model = PeftModel.from_pretrained(model, output_dir)
-        model.eval()
+            offload_folder=offload_folder, # offload to disk if model is to big)
+        )  
         # Merge LoRA and base model and save
         merged_model = model.merge_and_unload()
-        merged_model.save_pretrained("/opt/ml/model/")
+        merged_model.save_pretrained("/opt/ml/model/",safe_serialization=True)
     else:
-        trainer.model.save_pretrained("/opt/ml/model/")
+        trainer.model.save_pretrained("/opt/ml/model/", safe_serialization=True)
 
     # save tokenizer for easy inference
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
