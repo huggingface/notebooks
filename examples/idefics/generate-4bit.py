@@ -1,12 +1,16 @@
 import torch
-from transformers import IdeficsForVisionText2Text, AutoProcessor
+from transformers import IdeficsForVisionText2Text, AutoProcessor, BitsAndBytesConfig
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 checkpoint = "HuggingFaceM4/idefics-9b"
 #checkpoint = "HuggingFaceM4/tiny-random-idefics"
 
-model = IdeficsForVisionText2Text.from_pretrained(checkpoint, load_in_4bit=True)
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype="float16",
+)
+model = IdeficsForVisionText2Text.from_pretrained(checkpoint, quantization_config=quantization_config, device_map="auto")
 processor = AutoProcessor.from_pretrained(checkpoint)
 
 prompts = [
