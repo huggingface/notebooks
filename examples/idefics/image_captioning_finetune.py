@@ -14,10 +14,6 @@ checkpoint = "HuggingFaceM4/idefics-9b"
 processor = AutoProcessor.from_pretrained(checkpoint)
 model = IdeficsForVisionText2Text.from_pretrained(checkpoint, torch_dtype=torch.bfloat16).to(device)
 
-# freeze the original text and vision models and finetune only the layers added by IDEFICS
-model.model.freeze_text_layers()
-model.model.freeze_vision_layers()
-
 # help util
 def check_inference(model):
     url = "https://huggingface.co/datasets/sayakpaul/sample-datasets/resolve/main/pokemon.png"
