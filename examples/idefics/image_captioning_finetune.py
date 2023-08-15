@@ -15,7 +15,6 @@ processor = AutoProcessor.from_pretrained(checkpoint)
 model = IdeficsForVisionText2Text.from_pretrained(checkpoint, torch_dtype=torch.bfloat16).to(device)
 
 # freeze the original text and vision models and finetune only the layers added by IDEFICS
-# you can unfreeze the whole model, but it'll require multiple gpus to finetune
 model.model.freeze_text_layers()
 model.model.freeze_vision_layers()
 
@@ -98,7 +97,7 @@ config = LoraConfig(
 
 model = get_peft_model(model, config)
 
-# this setup requires about 40GB of gpu memory
+# this setup requires about 20GB of gpu memory
 training_args = TrainingArguments(
     output_dir=f"{model_name}-pokemon",
     learning_rate=5e-6,
