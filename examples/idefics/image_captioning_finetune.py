@@ -100,12 +100,12 @@ model = get_peft_model(model, config)
 # this setup requires about 20GB of gpu memory
 training_args = TrainingArguments(
     output_dir=f"{model_name}-pokemon",
-    learning_rate=5e-6,
+    learning_rate=2e-4,
     num_train_epochs=10,
     bf16=True,
     per_device_train_batch_size=32,
     per_device_eval_batch_size=32,
-    gradient_accumulation_steps=2,
+    gradient_accumulation_steps=1,
     dataloader_pin_memory=False,
     save_total_limit=3,
     evaluation_strategy="steps",
