@@ -132,5 +132,5 @@ trainer.train()
 # check generation again after finetuning
 check_inference(model)
 
-# after finetuning ideally we want generate to produce something like: a drawing of a pink and blue pokemon
+# after finetuning ideally we want generate to produce something like: a bug-type and flying-type pokemon
 model.push_to_hub(f"{model_name}-pokemon", private=False)
