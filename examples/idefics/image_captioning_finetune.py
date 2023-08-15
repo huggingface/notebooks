@@ -36,8 +36,8 @@ def check_inference(model):
 check_inference(model)
 # well, actually it looks like the model is already aware of pokemon - but this dataset will refine it further
 
-# finetune the model on the pokemon dataset
-ds = load_dataset("lambdalabs/pokemon-blip-captions")
+# finetune the model on the pokemon types dataset
+ds = load_dataset("GabeHD/pokemon-type-captions")
 ds = ds["train"].train_test_split(test_size=0.1)
 train_ds = ds["train"]
 eval_ds = ds["test"]
