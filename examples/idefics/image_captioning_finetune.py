@@ -2,12 +2,13 @@
 
 import torch
 from datasets import load_dataset
+from peft import LoraConfig, get_peft_model 
+from PIL import Image
 from transformers import IdeficsForVisionText2Text, AutoProcessor, Trainer, TrainingArguments
 import torchvision.transforms as transforms
-
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-#checkpoint = "HuggingFaceM4/tiny-random-idefics"
+# checkpoint = "HuggingFaceM4/tiny-random-idefics"
 checkpoint = "HuggingFaceM4/idefics-9b"
 
 processor = AutoProcessor.from_pretrained(checkpoint)
@@ -19,7 +20,7 @@ model.model.freeze_text_layers()
 model.model.freeze_vision_layers()
 
 # help util
-def check_inference():
+def check_inference(model):
     url = "https://huggingface.co/datasets/sayakpaul/sample-datasets/resolve/main/pokemon.png"
     prompts = [
         "Instruction: provide an answer to the question. Use the image to answer.\n",
@@ -33,7 +34,7 @@ def check_inference():
     print(generated_text)
 
 # check generation before finetuning
-check_inference()
+check_inference(model)
 # well, actually it looks like the model is already aware of pokemon - but this dataset will refine it further
 
 # finetune the model on the pokemon dataset
@@ -87,6 +88,16 @@ eval_ds.set_transform(ds_transforms)
 
 model_name = checkpoint.split("/")[1]
 
+config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    target_modules=["q_proj", "k_proj", "v_proj"],
+    lora_dropout=0.05,
+    bias="none",
+)
+
+model = get_peft_model(model, config)
+
 # this setup requires about 40GB of gpu memory
 training_args = TrainingArguments(
     output_dir=f"{model_name}-pokemon",
@@ -120,6 +131,7 @@ trainer = Trainer(
 trainer.train()
 
 # check generation again after finetuning
-check_inference()
+check_inference(model)
 
 # after finetuning ideally we want generate to produce something like: a drawing of a pink and blue pokemon
+model.push_to_hub(f"{model_name}-pokemon", private=False)
