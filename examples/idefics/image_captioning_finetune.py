@@ -18,7 +18,6 @@ model = IdeficsForVisionText2Text.from_pretrained(checkpoint, torch_dtype=torch.
 def check_inference(model):
     url = "https://huggingface.co/datasets/sayakpaul/sample-datasets/resolve/main/pokemon.png"
     prompts = [
-        "Instruction: provide an answer to the question. Use the image to answer.\n",
         url,
         "Question: What's on the picture? Answer:",
     ]
@@ -66,7 +65,6 @@ def ds_transforms(example_batch):
     for i in range(len(example_batch)):
         prompts.append(
             [
-                "Instruction: provide an answer to the question. Use the image to answer.\n",
                 example_batch["image"][i],
                 f"Question: What's on the picture? Answer: {example_batch['text'][i]}\n",
             ],
