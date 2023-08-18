@@ -1,3 +1,5 @@
+# this is a demo of inference of IDEFICS-9B which needs about 20GB gpu memory
+
 import torch
 from transformers import IdeficsForVisionText2Text, AutoProcessor
 
