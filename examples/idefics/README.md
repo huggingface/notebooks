@@ -8,5 +8,5 @@
 
 The following demos use the Image captioning task:
 
-- [PEFT finetuning (notebook)](IDEFICS_finetuning_demo.ipynb) (fits on Google colab)
+- [PEFT (LORA) finetuning (notebook)](IDEFICS_finetuning_demo.ipynb) (fits on Google colab)
 - [Normal finetuning](image_captioning_finetune.py) (needs ~40GB GPU memory)
