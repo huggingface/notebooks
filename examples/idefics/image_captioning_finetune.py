@@ -1,21 +1,33 @@
 # adapted from https://github.com/huggingface/notebooks/blob/main/transformers_doc/en/pytorch/image_captioning.ipynb
 
+# This example demonstrates normal finetuning (w/o peft) - for the sake of keeping the memory
+# requirements small it freezes the original pre-trained text and image layers to keep the memory
+# requirements to just 40GB. If you have multiple GPUs then you can remove the unfreeze part to
+# finetune the whole model. Alternatively use the PEFT solution as shown in
+# IDEFICS_finetuning_demo.ipynb notebook which requires only 20GB to finetune the whole model.
+
 import torch
+import torchvision.transforms as transforms
+
 from datasets import load_dataset
-from peft import LoraConfig, get_peft_model 
 from PIL import Image
 from transformers import IdeficsForVisionText2Text, AutoProcessor, Trainer, TrainingArguments
-import torchvision.transforms as transforms
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# checkpoint = "HuggingFaceM4/tiny-random-idefics"
 checkpoint = "HuggingFaceM4/idefics-9b"
+# checkpoint = "HuggingFaceM4/tiny-random-idefics"
 
 processor = AutoProcessor.from_pretrained(checkpoint)
 model = IdeficsForVisionText2Text.from_pretrained(checkpoint, torch_dtype=torch.bfloat16).to(device)
 
+# freeze the original text and vision models and finetune only the layers added by IDEFICS
+# you can unfreeze the whole model, but it'll require multiple gpus to finetune
+model.model.freeze_text_layers()
+model.model.freeze_vision_layers()
+
 # help util
-def check_inference(model):
+def check_inference():
     url = "https://huggingface.co/datasets/sayakpaul/sample-datasets/resolve/main/pokemon.png"
     prompts = [
         url,
@@ -28,7 +40,7 @@ def check_inference(model):
     print(generated_text)
 
 # check generation before finetuning
-check_inference(model)
+check_inference()
 # well, actually it looks like the model is already aware of pokemon - but this dataset will refine it further
 
 # finetune the model on the pokemon types dataset
@@ -81,25 +93,15 @@ eval_ds.set_transform(ds_transforms)
 
 model_name = checkpoint.split("/")[1]
 
-config = LoraConfig(
-    r=16,
-    lora_alpha=32,
-    target_modules=["q_proj", "k_proj", "v_proj"],
-    lora_dropout=0.05,
-    bias="none",
-)
-
-model = get_peft_model(model, config)
-
-# this setup requires about 20GB of gpu memory
+# this setup requires about 40GB of gpu memory
 training_args = TrainingArguments(
     output_dir=f"{model_name}-pokemon",
-    learning_rate=2e-4,
+    learning_rate=5e-6,
     num_train_epochs=10,
     bf16=True,
     per_device_train_batch_size=32,
     per_device_eval_batch_size=32,
-    gradient_accumulation_steps=1,
+    gradient_accumulation_steps=2,
     dataloader_pin_memory=False,
     save_total_limit=3,
     evaluation_strategy="steps",
@@ -124,7 +126,6 @@ trainer = Trainer(
 trainer.train()
 
 # check generation again after finetuning
-check_inference(model)
+check_inference()
 
-# after finetuning ideally we want generate to produce something like: a bug-type and flying-type pokemon
-model.push_to_hub(f"{model_name}-pokemon", private=False)
+# after finetuning ideally we want generate to produce something like: a drawing of a pink and blue pokemon
