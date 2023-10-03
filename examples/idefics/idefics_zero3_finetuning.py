@@ -1,6 +1,6 @@
 """
 Launch with `deepspeed --num_gpus N idefics_zero3_finetuning.py`
-by replacing N by the number of your gpus
+by replacing N with the number of your GPUs
 """
 
 import torch
