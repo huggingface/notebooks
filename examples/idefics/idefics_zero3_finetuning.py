@@ -117,7 +117,7 @@ training_args = TrainingArguments(
     push_to_hub=False,
     label_names=["labels"],
     load_best_model_at_end=True,
-    report_to=None,
+    report_to="none",
     optim="adamw_torch",
     deepspeed=ds_config,
 )
