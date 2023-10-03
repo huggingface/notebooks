@@ -1,0 +1,10 @@
+
+torch
+deepspeed
+transformers>4.33.3
+pillow
+sentencepiece
+protobuf
+datasets
+accelerate
+mpi4py

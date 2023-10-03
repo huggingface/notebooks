@@ -1,6 +1,12 @@
 """
-Launch with `deepspeed --num_gpus N idefics_zero3_finetuning.py`
+On one node, launch with `deepspeed --num_gpus N idefics_zero3_finetuning.py`
 by replacing N with the number of your GPUs
+
+For several nodes, using Slurm, a template script is provided at
+`examples/idefics/idefics_zero3_finetuning/slurm_script_idefics_zero3_finetuning_multinode.slurm`
+
+For more information, follow the tutorial on using DeepSpeed with Transformers at
+https://huggingface.co/docs/transformers/main_classes/deepspeed
 """
 
 import torch
