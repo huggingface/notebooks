@@ -14,47 +14,35 @@
 			"customizations": {
 				"vscode": {
 					"extensions": [
-					// liveshare
-					"ms-vsliveshare.vsliveshare", // Enables real-time collaboration between developers
-					// intellicode
-					"VisualStudioExptTeam.intellicode-api-usage-examples", // Provides examples of how to use IntelliCode APIs
-					"VisualStudioExptTeam.vscodeintellicode-completions", // Provides AI-assisted code completions
-					"VisualStudioExptTeam.vscodeintellicode-insiders",	// Provides AI-assisted code completions (Insiders version)
-					// ms-vscode-remote
-					"ms-vscode-remote.remote-ssh", // Provides SSH remote development capabilities
-					"ms-vscode-remote.remote-containers", // Provides container-based remote development capabilities
-					// python
-					"ms-python.python", // Provides Python language support
-					"ms-python.vscode-pylance", // Provides advanced Python language support
-					"ms-python.black-formatter", // Provides code formatting using the Black formatter
-					// format
-					"streetsidesoftware.code-spell-checker", // Provides spell checking for code comments and strings
-					"yzhang.markdown-all-in-one", // Provides Markdown language support
-					"aaron-bond.better-comments", // Provides improved commenting functionality
-					"njpwerner.autodocstring", // Provides automatic documentation generation for Python functions
-					// source Control
-					"GitHub.vscode-pull-request-github", // Provides GitHub pull request integration
-					"GitHub.codespaces", // Provides GitHub Codespaces integration
-					"GitHub.vscode-github-actions", // Provides GitHub Actions integration
-					"eamodio.gitlens", // Provides Git repository management capabilities
-					// copilot
-					"GitHub.copilot", // Provides AI-assisted code completions and suggestions
-					"GitHub.copilot-chat",  // Provides access to the GitHub Copilot chat (must sign up at https://github.com/github-copilot/chat_waitlist_signup/join)
-					"GitHub.copilot-labs", // Provides access to experimental GitHub Copilot features
-					// ai tools
-					//"HuggingFace.huggingface-vscode", // Provides natural language processing capabilities
-					//"TabNine.tabnine-vscode", // Provides AI-assisted code completions
-					//"Blackboxapp.blackbox", // Provides secure and private machine learning capabilities
-					"Codeium.codeium", // Provides AI-assisted code completions and suggestions
-					// ms-toolai
-					"ms-toolsai.datawrangler", // Provides data cleaning, transformation, and reshaping capabilities
-					"ms-toolsai.jupyter-renderers", // Provides additional Jupyter Notebook cell renderers
-					"ms-toolsai.jupyter", // Provides Jupyter Notebook integration with VS Code
-					"ms-toolsai.vscode-jupyter-cell-tags", // Provides support for cell tags in Jupyter Notebooks
-					"ms-toolsai.vscode-jupyter-slideshow", // Provides support for creating and viewing Jupyter Notebook slideshows
-					"ms-toolsai.jupyter-keymap"	// Provides additional keyboard shortcuts for Jupyter Notebooks	
-
-						]
+                        "ms-vsliveshare.vsliveshare",
+                        "VisualStudioExptTeam.intellicode-api-usage-examples",
+                        "VisualStudioExptTeam.vscodeintellicode-completions",
+                        "VisualStudioExptTeam.vscodeintellicode-insiders",
+                        "ms-vscode-remote.remote-ssh",
+                        "ms-vscode-remote.remote-containers",
+                        "ms-python.python",
+                        "ms-python.vscode-pylance",
+                        "ms-python.black-formatter",
+                        "streetsidesoftware.code-spell-checker",
+                        "yzhang.markdown-all-in-one",
+                        "aaron-bond.better-comments",
+                        "njpwerner.autodocstring",
+                        "GitHub.vscode-pull-request-github",
+                        "GitHub.codespaces",
+                        "GitHub.vscode-github-actions",
+                        "eamodio.gitlens",
+                        //"GitHub.copilot",
+                        //"GitHub.copilot-chat",
+                        //"GitHub.copilot-labs",
+                        "Codeium.codeium",
+                        "ms-toolsai.datawrangler",
+                        "ms-toolsai.jupyter-renderers",
+                        "ms-toolsai.jupyter",
+                        "ms-toolsai.vscode-jupyter-cell-tags",
+                        "ms-toolsai.vscode-jupyter-slideshow",
+                        "ms-toolsai.jupyter-keymap",
+                      
+                    ]
 				}
 			}
     // Features to add to the dev container. More info: https://containers.dev/features.
