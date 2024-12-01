@@ -1,0 +1,51 @@
+//devcontainer.json
+{
+    "name": "🤗", 
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "image": "mcr.microsoft.com/vscode/devcontainers/python:3.10",
+    // pip install needed python packages on creation
+    "postCreateCommand": "pip install -r /workspaces/notebooks/requirements.txt",
+    "mounts": [
+      // Mount the local .ssh directory so you can use SSH key-based authentication.
+      "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+      // Mount the local .gitconfig file so you can configure Git user settings.
+      "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
+			],
+			"customizations": {
+				"vscode": {
+					"extensions": [
+                        "ms-vsliveshare.vsliveshare",
+                        "VisualStudioExptTeam.intellicode-api-usage-examples",
+                        "VisualStudioExptTeam.vscodeintellicode-completions",
+                        "VisualStudioExptTeam.vscodeintellicode-insiders",
+                        "ms-vscode-remote.remote-ssh",
+                        "ms-vscode-remote.remote-containers",
+                        "ms-python.python",
+                        "ms-python.vscode-pylance",
+                        "ms-python.black-formatter",
+                        "streetsidesoftware.code-spell-checker",
+                        "yzhang.markdown-all-in-one",
+                        "aaron-bond.better-comments",
+                        "njpwerner.autodocstring",
+                        "GitHub.vscode-pull-request-github",
+                        "GitHub.codespaces",
+                        "GitHub.vscode-github-actions",
+                        "eamodio.gitlens",
+                        //"GitHub.copilot",
+                        //"GitHub.copilot-chat",
+                        //"GitHub.copilot-labs",
+                        "Codeium.codeium",
+                        "ms-toolsai.datawrangler",
+                        "ms-toolsai.jupyter-renderers",
+                        "ms-toolsai.jupyter",
+                        "ms-toolsai.vscode-jupyter-cell-tags",
+                        "ms-toolsai.vscode-jupyter-slideshow",
+                        "ms-toolsai.jupyter-keymap",
+                      
+                    ]
+				}
+			}
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {}
+  }
+   
