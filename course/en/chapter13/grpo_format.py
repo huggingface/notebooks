@@ -36,7 +36,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo, format_buttons):
     import plotly.express as px
-    import plotly.graph_objects as go
     import re
 
     # Sample completions with different formats
@@ -127,16 +126,15 @@ def _(mo, format_buttons):
     mo.ui.table(results)
 
     # Create a bar chart comparing rewards by completion
-    fig1 = px.bar(
+    fig = px.bar(
         results,
         x="Completion",
         y="Reward",
-        color="Reward",
-        hover_data=["Detail"],
+        color="Category",
         title=f"Format Rewards by Completion ({format_buttons.value})",
+        hover_data=["Detail"],
     )
-    fig1.update_layout(showlegend=False)
-    mo.ui.plotly(fig1)
+    mo.ui.plotly(fig)
 
 
 if __name__ == "__main__":
