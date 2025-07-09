@@ -9,3 +9,5 @@ If there is something that seems weirdly converted from the original doc file, o
 try to fix the conversion script.
 
 **Note:** If you are looking for a particular notebook and can't find it, it may have moved inside the `en` subfolder.
+
+**Warning:** The Tensorflow backend for transformers has been [deprecated](https://github.com/huggingface/transformers/pull/38758). The notebooks under the `tensorflow` folder may not give the correct output.
