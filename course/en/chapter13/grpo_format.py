@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "marimo",
+#   "plotly",
+#   "numpy",
+#   "pandas",
+# ]
+# ///
+
 import marimo
 
 __generated_with = "0.10.6"
@@ -121,11 +131,10 @@ def _(mo, format_buttons):
             }
         )
 
-    # Create a table view
-    mo.md(f"### Results for {format_buttons.value} format")
-    mo.ui.table(results)
-
-    # Create a bar chart comparing rewards by completion
+    display_rows = [
+        {**row, "Reward": f"{row['Reward']:.2f}"}
+        for row in results
+    ]
     fig = px.bar(
         results,
         x="Completion",
@@ -134,7 +143,14 @@ def _(mo, format_buttons):
         title=f"Format Rewards by Completion ({format_buttons.value})",
         hover_data=["Detail"],
     )
-    mo.ui.plotly(fig)
+
+    mo.vstack(
+        [
+            mo.md(f"### Results for {format_buttons.value} format"),
+            mo.ui.table(display_rows, selection=None),
+            mo.ui.plotly(fig),
+        ]
+    )
 
 
 if __name__ == "__main__":
