@@ -1,0 +1,144 @@
+{
+    "data_vendor": [
+        {
+            "Vendor_id": 1,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 2592658.16,
+            "Total_Paid": 1122175.89,
+            "Total_Payment_Pending": 1470482.2700000003
+        },
+        {
+            "Vendor_id": 1,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 3200621.47,
+            "Total_Paid": 1242809.78,
+            "Total_Payment_Pending": 1957811.6900000002
+        },
+        {
+            "Vendor_id": 2,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 1269629.8900000001,
+            "Total_Paid": 611998.97,
+            "Total_Payment_Pending": 657630.9200000002
+        },
+        {
+            "Vendor_id": 2,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 4796347.0,
+            "Total_Paid": 2697809.12,
+            "Total_Payment_Pending": 2098537.88
+        },
+        {
+            "Vendor_id": 3,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 4283011.32,
+            "Total_Paid": 2706534.52,
+            "Total_Payment_Pending": 1576476.8000000003
+        },
+        {
+            "Vendor_id": 3,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 7178807.3,
+            "Total_Paid": 3256942.07,
+            "Total_Payment_Pending": 3921865.23
+        },
+        {
+            "Vendor_id": 4,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 1556425.91,
+            "Total_Paid": 834231.77,
+            "Total_Payment_Pending": 722194.1399999999
+        },
+        {
+            "Vendor_id": 4,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 2459582.46,
+            "Total_Paid": 1322733.7799999998,
+            "Total_Payment_Pending": 1136848.6800000002
+        },
+        {
+            "Vendor_id": 5,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 2479642.2,
+            "Total_Paid": 824361.47,
+            "Total_Payment_Pending": 1655280.7300000002
+        },
+        {
+            "Vendor_id": 5,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 1919406.62,
+            "Total_Paid": 935390.44,
+            "Total_Payment_Pending": 984016.1800000002
+        },
+        {
+            "Vendor_id": 6,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 1402079.2,
+            "Total_Paid": 557533.38,
+            "Total_Payment_Pending": 844545.82
+        },
+        {
+            "Vendor_id": 6,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 1025278.5,
+            "Total_Paid": 772776.3600000001,
+            "Total_Payment_Pending": 252502.1399999999
+        },
+        {
+            "Vendor_id": 7,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 754940.93,
+            "Total_Paid": 78165.89,
+            "Total_Payment_Pending": 676775.04
+        },
+        {
+            "Vendor_id": 7,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 2204510.02,
+            "Total_Paid": 1174309.3900000001,
+            "Total_Payment_Pending": 1030200.6299999999
+        },
+        {
+            "Vendor_id": 8,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 3498181.76,
+            "Total_Paid": 758089.71,
+            "Total_Payment_Pending": 2740092.05
+        },
+        {
+            "Vendor_id": 8,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 1542454.28,
+            "Total_Paid": 808482.86,
+            "Total_Payment_Pending": 733971.42
+        },
+        {
+            "Vendor_id": 9,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 2464398.71,
+            "Total_Paid": 2171828.74,
+            "Total_Payment_Pending": 292569.96999999974
+        },
+        {
+            "Vendor_id": 9,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 5808851.04,
+            "Total_Paid": 1745852.68,
+            "Total_Payment_Pending": 4062998.3600000003
+        },
+        {
+            "Vendor_id": 10,
+            "Invoice_Date": "2023-11",
+            "Total_Payment_Due": 106106.59,
+            "Total_Paid": 63521.1,
+            "Total_Payment_Pending": 42585.49
+        },
+        {
+            "Vendor_id": 10,
+            "Invoice_Date": "2023-12",
+            "Total_Payment_Due": 2376730.59,
+            "Total_Paid": 1552580.7200000002,
+            "Total_Payment_Pending": 824149.8699999996
+        }
+    ]
+}
